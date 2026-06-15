@@ -20,6 +20,21 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    switch (Constants.currentMode) {
+      case REAL:
+      
+        break;
+
+      case SIM:
+
+        break;
+
+      default:
+        // Replayed robot, disable IO implementations
+
+        break;
+    }
+
     // Configure the trigger bindings
     configureBindings();
   }
