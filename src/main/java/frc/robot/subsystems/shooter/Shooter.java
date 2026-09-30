@@ -1,7 +1,10 @@
 package frc.robot.subsystems.shooter;
 
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+
 import org.littletonrobotics.junction.Logger;
 
+import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
@@ -18,8 +21,8 @@ public class Shooter extends SubsystemBase {
         Logger.processInputs("Shooter", inputs);
     }
 
-    public void setDutyCycle(double dutyCycle) {
-        io.setDutyCycle(dutyCycle);
-        Logger.recordOutput("Shooter/Requested Duty Cycle", dutyCycle);
+    public void setDutyCycle(AngularVelocity velocity) {
+        io.setVelocity(velocity);
+        Logger.recordOutput("Shooter/Requested Duty Cycle", velocity.in(RotationsPerSecond));
     }
 }

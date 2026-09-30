@@ -1,5 +1,7 @@
 package frc.robot.subsystems.shooter;
 
+import edu.wpi.first.units.measure.AngularVelocity;
+
 public class ShooterIOEmpty implements ShooterIO {
 
     @Override
@@ -7,7 +9,7 @@ public class ShooterIOEmpty implements ShooterIO {
     }
 
     @Override
-    public void setDutyCycle(double dutyCycle) {
+    public void setVelocity(AngularVelocity velocity) {
     }
     
 }

@@ -1,10 +1,12 @@
 package frc.robot.subsystems.shooter;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import badgerutils.advantagekit.talonfx.TalonFXSignals;
 import badgerutils.motor.MotorGroup;
+import edu.wpi.first.units.measure.AngularVelocity;
 
 public class ShooterIOReal implements ShooterIO {
     private TalonFX motor1 = new TalonFX(5);
@@ -15,7 +17,7 @@ public class ShooterIOReal implements ShooterIO {
     private TalonFXSignals motor1Signals = new TalonFXSignals(motor1);
     private TalonFXSignals motor2Signals = new TalonFXSignals(motor2);
 
-    private DutyCycleOut request = new DutyCycleOut(0);
+    private VelocityTorqueCurrentFOC request = new VelocityTorqueCurrentFOC(0);
 
     public ShooterIOReal() {
         motor1.getConfigurator().apply(ShooterConstants.config);
@@ -29,8 +31,8 @@ public class ShooterIOReal implements ShooterIO {
     }
 
     @Override
-    public void setDutyCycle(double dutyCycle) {
-        request.Output = dutyCycle;
+    public void setVelocity(AngularVelocity velocity) {
+        request.withVelocity(velocity);
         motorGroup.setControl(request);
     }
 }
