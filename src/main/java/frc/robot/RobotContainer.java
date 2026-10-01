@@ -4,12 +4,16 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+
+import org.littletonrobotics.junction.AutoLogOutput;
+import org.littletonrobotics.junction.networktables.LoggedNetworkNumber;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.shooter.Shooter;
-import frc.robot.subsystems.shooter.ShooterIO;
 import frc.robot.subsystems.shooter.ShooterIOEmpty;
 import frc.robot.subsystems.shooter.ShooterIOReal;
 
@@ -20,6 +24,9 @@ import frc.robot.subsystems.shooter.ShooterIOReal;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+  @AutoLogOutput
+  private final LoggedNetworkNumber shooterSpeed = new LoggedNetworkNumber("Tuning/Shooter", 0);
+
   private final CommandXboxController controller = new CommandXboxController(0);
 
   private final Shooter shooter;
@@ -55,10 +62,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    controller.a().whileTrue(Commands.startEnd(
-      () -> shooter.setDutyCycle(.5),
-      () -> shooter.setDutyCycle(0),
-      shooter));
+    shooter.setDefaultCommand(Commands.run(() -> shooter.runShooterCommand(RotationsPerSecond.of(shooterSpeed.get())), shooter));
   }
 
   /**
